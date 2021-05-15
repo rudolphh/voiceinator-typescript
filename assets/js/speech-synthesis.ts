@@ -1,12 +1,12 @@
-const msg = new SpeechSynthesisUtterance();
+const msg : SpeechSynthesisUtterance = new SpeechSynthesisUtterance();
 
-let voice = [];
-const voicesDropdown = document.querySelector('[name="voice"]');
-const options = document.querySelectorAll('[type="range"]');
+let voices : SpeechSynthesisVoice [] = [];
+const voicesDropdown : HTMLElement = <HTMLElement> document.querySelector('[name="voice"]')!;
+const options : NodeList = document.querySelectorAll('[type="range"]');
 
 // msg.text = transcript or query somewhere
 
-function populateVoices() {
+function populateVoices(this: SpeechSynthesis) {
     voices = this.getVoices();
     console.log(voices);
     voicesDropdown.innerHTML = voices.map(voice => 
@@ -14,9 +14,9 @@ function populateVoices() {
     ).join('');
 }
 
-function setVoice() {
+function setVoice(this: HTMLInputElement) {
     console.log('voice changed');
-    msg.voice = voices.find(voice => voice.name === this.value);
+    msg.voice = voices.find(voice => voice.name === this.value)!;
     toggle();
 }
 
@@ -25,9 +25,10 @@ function toggle() {
     speechSynthesis.speak(msg);
 }
 
-function setOptions() {
+function setOptions(this: HTMLInputElement) {
     console.log(this.name, this.value);
-    msg[this.name] = this.value;
+    const nameKey : keyof SpeechSynthesisUtterance = <keyof SpeechSynthesisUtterance> this.name;
+    msg[nameKey] = <never> this.value;
     toggle();
 }
 
