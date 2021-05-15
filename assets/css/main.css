@@ -1,0 +1,42 @@
+#search-input-label {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  #search-nav-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .results-nav {
+    padding: 20px;
+  }
+  .words {
+    border: 1px solid lightgray;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .words p {
+    font-size: 30px;
+    border-bottom: 1px solid slategray;
+  }
+
+  #logo-container {
+    text-align: center;
+  }
+
+  .vcin-logo {
+    text-align: center;
+    transition: max-height 1s ease-out;
+    max-height: 600px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+  }
+
+  .disappear {
+    max-height: 0px;
+  }
+
+  #voices {
+      margin-bottom: 10px;
+  }
