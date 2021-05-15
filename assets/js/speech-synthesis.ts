@@ -6,7 +6,7 @@ const options : NodeList = document.querySelectorAll('[type="range"]');
 
 // msg.text = transcript or query somewhere
 
-function populateVoices(this: SpeechSynthesis) {
+function populateVoices(this: SpeechSynthesis) : void {
     voices = this.getVoices();
     console.log(voices);
     voicesDropdown.innerHTML = voices.map(voice => 
@@ -14,18 +14,18 @@ function populateVoices(this: SpeechSynthesis) {
     ).join('');
 }
 
-function setVoice(this: HTMLInputElement) {
+function setVoice(this: HTMLInputElement) : void {
     console.log('voice changed');
     msg.voice = voices.find(voice => voice.name === this.value)!;
     toggle();
 }
 
-function toggle() {
+function toggle() : void {
     speechSynthesis.cancel();
     speechSynthesis.speak(msg);
 }
 
-function setOptions(this: HTMLInputElement) {
+function setOptions(this: HTMLInputElement) : void {
     console.log(this.name, this.value);
     const nameKey : keyof SpeechSynthesisUtterance = <keyof SpeechSynthesisUtterance> this.name;
     msg[nameKey] = <never> this.value;
