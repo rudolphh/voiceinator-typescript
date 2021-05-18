@@ -1,6 +1,4 @@
 const resultsList = document.querySelector(`#results-list`);
-const searchInputLabel = document.querySelector(`#search-input-label`);
-const searchInput = document.querySelector(`#search-input`);
 const searchNavTop = document.querySelector(`#search-nav-top`);
 const searchNavBottom = document.querySelector(`#search-nav-bottom`);
 const bibleVersionID = `179568874c45066f-01`;
@@ -10,7 +8,7 @@ const abbreviationLocal = "DRA";
 const bibleGatewayBaseUrl = 'https://www.biblegateway.com/passage/?search=';
 
 
-function search(searchText, offset = 0) {
+export default function search(searchText, offset = 0) {
   getResults(searchText, offset).then((data) => {
     let resultsHTML = ``;
 

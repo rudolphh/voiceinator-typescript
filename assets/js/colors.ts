@@ -1,4 +1,4 @@
-const CSS_COLOR_NAMES = [
+const CSS_COLOR_NAMES : string[] = [
     "AliceBlue",
     "AntiqueWhite",
     "Aqua",

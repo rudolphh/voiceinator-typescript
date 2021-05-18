@@ -1,11 +1,16 @@
-const recognition = new (window.SpeechRecognition ||
-  window.webkitSpeechRecognition)();
+import search from '../js/bible-api-search'
+
+const recognition : SpeechRecognition = new SpeechRecognition;
 recognition.interimResults = true;
 
-let p = document.createElement("p");
-let small = document.createElement("small");
+let p : HTMLParagraphElement = document.createElement("p");
+let small : HTMLElement = document.createElement("small");
 
-p.contentEditable = true;
+const searchInputLabel : HTMLElement = document.querySelector(`#search-input-label`)!;
+const searchInput : HTMLElement = document.querySelector(`#search-input`)!;
+
+
+p.contentEditable = "true";
 p.textContent = "Voiceinator";
 
 small.innerHTML =
@@ -20,14 +25,15 @@ small.innerHTML += `
   </ul>
 </small>`;
 
-const words = document.querySelector(".words");
+
+const words : HTMLElement = document.querySelector(".words")!;
 words.appendChild(p);
 words.appendChild(small);
 
-function resultHandler(e) {
+function resultHandler(e : any) {
   //console.log(e.results);
   const transcript = Array.from(e.results)
-    .map((result) => result[0])
+    .map((result : any) => result[0])
     .map((result) => result.transcript)
     .join("");
 
@@ -64,8 +70,8 @@ function resultHandler(e) {
       let searchIndex = transcript.lastIndexOf("Bible") + 6; // ignore name plus a space
       let query = transcript.substring(searchIndex);
 
-      const beBack = document.getElementById("myAudio");
-      const vcinLogo = document.querySelector(".vcin-logo");
+      const beBack = <HTMLAudioElement> document.getElementById("myAudio")!;
+      const vcinLogo : HTMLElement = document.querySelector(".vcin-logo")!;
 
       if (!vcinLogo.classList.contains("disappear")) {
         beBack.play();
@@ -79,13 +85,13 @@ function resultHandler(e) {
     }
 
     // jobs
-    let phrase = "indeed";
+    let phrase : string = "indeed";
     if (transcript.toLowerCase().includes(phrase)) {
-      let baseUrl = "https://www.indeed.com/jobs?q=";
-      let searchIndex = transcript.lastIndexOf(phrase) + phrase.length + 1;
-      let query = transcript.substring(searchIndex);
+      const baseUrl : string = "https://www.indeed.com/jobs?q=";
+      let searchIndex : number = transcript.lastIndexOf(phrase) + phrase.length + 1;
+      let query : string = transcript.substring(searchIndex);
 
-      let completeUrl = baseUrl + encodeURIComponent(query);
+      let completeUrl : string = baseUrl + encodeURIComponent(query);
 
       console.log(completeUrl);
       window.open(completeUrl);
@@ -95,12 +101,12 @@ function resultHandler(e) {
     //youtube
     phrase = "YouTube";
     if (transcript.includes(phrase)) {
-      let baseUrl = "https://www.youtube.com/results?search_query=";
-      let searchIndex = transcript.lastIndexOf(phrase) + phrase.length + 1;
-      let query = transcript.substring(searchIndex);
+      const baseUrl : string = "https://www.youtube.com/results?search_query=";
+      let searchIndex : number = transcript.lastIndexOf(phrase) + phrase.length + 1;
+      let query : string = transcript.substring(searchIndex);
 
       // encode only the query string
-      let completeUrl = baseUrl + encodeURIComponent(query);
+      let completeUrl : string = baseUrl + encodeURIComponent(query);
       console.log(completeUrl);
       window.open(completeUrl);
       return;
@@ -116,9 +122,9 @@ recognition.addEventListener("result", resultHandler);
 //recognition.addEventListener("end", recognition.start);
 //recognition.start();
 
-function debounce(func, timeout = 300) {
-  let timer;
-  return (...args) => {
+function debounce(this: void, func : Function, timeout = 300) {
+  let timer : number;
+  return (...args : any) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       func.apply(this, args);
@@ -126,14 +132,14 @@ function debounce(func, timeout = 300) {
   };
 }
 
-document.querySelector(".words p").addEventListener(
+document.querySelector(".words p")!.addEventListener(
   "input",
-  debounce(function () {
-    msg.text = document.querySelector(".words p").textContent;
+  debounce(function (){
+    msg.text = document.querySelector(".words p")!.textContent!;
     speechSynthesis.speak(msg);
   }, 500)
 );
 
-document.querySelector("#speak-btn").addEventListener("click", (e) => {
+document.querySelector("#speak-btn")!.addEventListener("click", (e) => {
   recognition.start();
 });
